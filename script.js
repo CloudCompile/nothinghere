@@ -15,11 +15,11 @@ async function loadSound(name, url) {
 }
 
 // Load all sounds
-loadSound('sound1', 'sounds/xboxearrape.mp3');
-loadSound('sound2', 'sounds/thomasthetrain.mp3');
-loadSound('sound3', 'sounds/gamecube.mp3');
-loadSound('sound4', 'sounds/iphoneearrape.mp3');
-loadSound('sound5', 'sounds/thickofitearrape.mp3');
+loadSound('xbox', 'sounds/xboxearrape.mp3');
+loadSound('train', 'sounds/thomasthetrain.mp3');
+loadSound('cube', 'sounds/gamecube.mp3');
+loadSound('iphone', 'sounds/iphoneearrape.mp3');
+loadSound('ksi', 'sounds/thickofitearrape.mp3');
 
 // Create EQ bands
 const eqBands = {
@@ -96,8 +96,9 @@ document.querySelectorAll('.eq-slider').forEach(slider => {
 
 // Define key bindings for sounds
 const keyBindings = {
-    "1": "xboxearrape",
-    "2": "thomasthetrain",
-    "3": "gamecube",
-    "4": "iphoneearrape",
-    "5
+    "1": "xbox",
+    "2": "train",
+    "3": "cube",
+    "4": "iphone",
+    "5": "ksi:,
+}
