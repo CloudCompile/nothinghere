@@ -1,3 +1,10 @@
+const masterGain = audioContext.createGain();
+masterGain.gain.value = 1; // Default 100% volume
+masterGain.connect(audioContext.destination);
+
+
+
+
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 const sounds = {};
 
@@ -67,6 +74,7 @@ function playSound(name) {
 
     // Connect everything: Source -> Gain -> EQ -> Compressor -> Output
     source.connect(gainNode);
+    gainNode.connect(masterGain);
     gainNode.connect(eqBands.low);
     source.start();
 }
