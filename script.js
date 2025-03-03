@@ -14,12 +14,14 @@ async function loadSound(name, url) {
     sounds[name] = audioBuffer;
 }
 
-// Load all sounds
-loadSound('xbox', 'sounds/xboxearrape.mp3');
-loadSound('train', 'sounds/thomasthetrain.mp3');
-loadSound('cube', 'sounds/gamecube.mp3');
-loadSound('iphone', 'sounds/iphoneearrape.mp3');
-loadSound('ksi', 'sounds/thickofitearrape.mp3');
+const sounds = {
+    sound1: new Audio('sounds/xboxearrape.mp3'),
+    sound2: new Audio('sounds/thomasthetrain.mp3'),
+    sound3: new Audio('sounds/gamecube.mp3'),
+    sound4: new Audio('sounds/iphoneearrape.mp3'),
+    sound5: new Audio('sounds/thickofitearrape.mp3'),
+    
+};
 
 // Create EQ bands
 const eqBands = {
