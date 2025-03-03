@@ -86,4 +86,21 @@ document.querySelectorAll('.sound-button').forEach(button => {
 document.querySelectorAll('.eq-slider').forEach(slider => {
     slider.addEventListener('input', updateEQ);
 });
+// Define key bindings for sounds
+const keyBindings = {
+    "1": "xboxearrape",
+    "2": "thomasthetrain",
+    "3": "gamecube",
+    "4": "iphoneearrape",
+    "5": "thickofitearrape",
+};
+
+
+// Listen for keyboard events
+document.addEventListener("keydown", (event) => {
+    const sound = keyBindings[event.key];
+    if (sound) {
+        playSound(sound);
+    }
+});
 
