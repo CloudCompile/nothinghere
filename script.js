@@ -1,9 +1,7 @@
+// Create the master gain node
 const masterGain = audioContext.createGain();
 masterGain.gain.value = 1; // Default 100% volume
-masterGain.connect(audioContext.destination);
-
-
-
+masterGain.connect(audioContext.destination); // Only connect once
 
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 const sounds = {};
@@ -54,7 +52,7 @@ compressor.attack.setValueAtTime(0.003, audioContext.currentTime);
 compressor.release.setValueAtTime(0.25, audioContext.currentTime);
 
 eqBands.high.connect(compressor);
-compressor.connect(audioContext.destination);
+compressor.connect(masterGain);
 
 // Function to play sound with volume boost
 function playSound(name) {
@@ -63,19 +61,16 @@ function playSound(name) {
     const source = audioContext.createBufferSource();
     source.buffer = sounds[name];
 
-    // Create a gain node
     const gainNode = audioContext.createGain();
+    const volumeBoost = parseFloat(document.getElementById('volume').value); // Get volume boost value
+    gainNode.gain.setValueAtTime(volumeBoost, audioContext.currentTime); // Apply boost
 
-    // Get volume boost value from the slider
-    const volumeBoost = parseFloat(document.getElementById('volume').value);
-
-    // 🔥 Fix: Allow boosting beyond normal max (default max is 1, we allow up to 5x or more)
-    gainNode.gain.setValueAtTime(volumeBoost, audioContext.currentTime);
-
-    // Connect everything: Source -> Gain -> EQ -> Compressor -> Output
+    // Connect everything: Source -> Gain -> EQ -> Compressor -> Master Gain
     source.connect(gainNode);
-    gainNode.connect(masterGain);
-    gainNode.connect(eqBands.low);
+    gainNode.connect(eqBands.low);  // EQ after gain
+    eqBands.high.connect(compressor); // EQ -> Compressor
+    compressor.connect(masterGain); // Compressor -> Master Gain
+
     source.start();
 }
 
@@ -98,21 +93,11 @@ document.querySelectorAll('.sound-button').forEach(button => {
 document.querySelectorAll('.eq-slider').forEach(slider => {
     slider.addEventListener('input', updateEQ);
 });
+
 // Define key bindings for sounds
 const keyBindings = {
     "1": "xboxearrape",
     "2": "thomasthetrain",
     "3": "gamecube",
     "4": "iphoneearrape",
-    "5": "thickofitearrape",
-};
-
-
-// Listen for keyboard events
-document.addEventListener("keydown", (event) => {
-    const sound = keyBindings[event.key];
-    if (sound) {
-        playSound(sound);
-    }
-});
-
+    "5
