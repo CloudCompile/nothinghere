@@ -28,3 +28,8 @@ h1 {
 .sound-button:hover {
     background-color: #0056b3;
 }
+
+#volume {
+    width: 200px;
+    margin: 10px;
+}
