@@ -10,9 +10,11 @@ async function loadSound(name, url) {
 }
 
 // Load all sounds
-loadSound('sound1', 'sounds/sound1.mp3');
-loadSound('sound2', 'sounds/sound2.mp3');
-loadSound('sound3', 'sounds/sound3.mp3');
+loadSound('xboxearrape', 'sounds/xboxearrape.mp3');
+loadSound('thomasthetrain', 'sounds/thomasthetrain.mp3');
+loadSound('gamecube', 'sounds/gamecube.mp3');
+loadSound('iphoneearrape', 'sounds/iphoneearrape.mp3');
+loadSound('thickofitearrape', 'sounds/thickofitearrape.mp3');
 
 // Create EQ bands
 const eqBands = {
