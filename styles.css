@@ -4,7 +4,7 @@ body {
     background-color: #f4f4f4;
 }
 
-h1 {
+h1, h2 {
     margin-top: 20px;
 }
 
@@ -29,7 +29,8 @@ h1 {
     background-color: #0056b3;
 }
 
-#volume {
+.eq-slider, #volume {
     width: 200px;
-    margin: 10px;
+    margin: 5px 0;
 }
+
