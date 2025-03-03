@@ -3,20 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soundboard</title>
+    <title>Soundboard with EQ & Volume Boost</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <h1>My Soundboard</h1>
+    
     <div class="soundboard">
-        <button class="sound-button" data-sound="sound1">XBOX SERIES X STARTUP SOUND EARRAPE</button>
-        <button class="sound-button" data-sound="sound2">THOMAS THE TRAIN</button>
-        <button class="sound-button" data-sound="sound3">NINTENDO GAMECUBE</button>
+        <button class="sound-button" data-sound="sound1">XBOX SERIES X STARTUP EARRAPE</button>
+        <button class="sound-button" data-sound="sound2">THOMAS THE TRAIN EARRAPE</button>
+        <button class="sound-button" data-sound="sound3">NINTENDO GAMECUBE EARRAPE</button>
     </div>
-<label for="volume">Volume Boost:</label>
-<input type="range" id="volume" min="1" max="20" step="0.1" value="1">
+
+    <h2>Volume Boost</h2>
+    <label for="volume">Volume:</label>
+    <input type="range" id="volume" min="1" max="10" step="0.1" value="1">
+
+    <h2>Equalizer</h2>
+    <label for="bass">Bass:</label>
+    <input type="range" id="bass" class="eq-slider" min="-10" max="10" step="1" value="0">
+
+    <label for="mid">Mid:</label>
+    <input type="range" id="mid" class="eq-slider" min="-10" max="10" step="1" value="0">
+
+    <label for="treble">Treble:</label>
+    <input type="range" id="treble" class="eq-slider" min="-10" max="10" step="1" value="0">
 
     <script src="script.js"></script>
 </body>
 </html>
-
