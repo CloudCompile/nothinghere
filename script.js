@@ -56,14 +56,18 @@ function playSound(name) {
     const source = audioContext.createBufferSource();
     source.buffer = sounds[name];
 
+    // Create a gain node
     const gainNode = audioContext.createGain();
-    const volumeBoost = parseFloat(document.getElementById('volume').value);
-    gainNode.gain.value = volumeBoost; // Boosts volume beyond normal max
 
-    // Connect source -> gain -> EQ -> Compressor -> Output
+    // Get volume boost value from the slider
+    const volumeBoost = parseFloat(document.getElementById('volume').value);
+
+    // 🔥 Fix: Allow boosting beyond normal max (default max is 1, we allow up to 5x or more)
+    gainNode.gain.setValueAtTime(volumeBoost, audioContext.currentTime);
+
+    // Connect everything: Source -> Gain -> EQ -> Compressor -> Output
     source.connect(gainNode);
     gainNode.connect(eqBands.low);
-
     source.start();
 }
 
