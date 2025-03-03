@@ -1,6 +1,4 @@
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-
-// Object to hold audio buffers
 const sounds = {};
 
 // Load audio files into buffers
@@ -12,31 +10,78 @@ async function loadSound(name, url) {
 }
 
 // Load all sounds
-loadSound('sound1', 'sounds/xboxearrape.mp3');
-loadSound('sound2', 'sounds/thomasthetrain.mp3');
-loadSound('sound3', 'sounds/gamecube.mp3');
+loadSound('sound1', 'sounds/sound1.mp3');
+loadSound('sound2', 'sounds/sound2.mp3');
+loadSound('sound3', 'sounds/sound3.mp3');
 
-// Function to play sound with gain control
-function playSound(name, gainValue) {
+// Create EQ bands
+const eqBands = {
+    low: audioContext.createBiquadFilter(),
+    mid: audioContext.createBiquadFilter(),
+    high: audioContext.createBiquadFilter(),
+};
+
+// Configure EQ bands
+eqBands.low.type = "lowshelf";  
+eqBands.low.frequency.value = 200; 
+
+eqBands.mid.type = "peaking";  
+eqBands.mid.frequency.value = 1000; 
+eqBands.mid.Q.value = 1;
+
+eqBands.high.type = "highshelf";  
+eqBands.high.frequency.value = 4000; 
+
+// Connect filters in sequence
+eqBands.low.connect(eqBands.mid);
+eqBands.mid.connect(eqBands.high);
+
+// Create a compressor (optional but improves sound clarity)
+const compressor = audioContext.createDynamicsCompressor();
+compressor.threshold.setValueAtTime(-20, audioContext.currentTime);
+compressor.knee.setValueAtTime(30, audioContext.currentTime);
+compressor.ratio.setValueAtTime(12, audioContext.currentTime);
+compressor.attack.setValueAtTime(0.003, audioContext.currentTime);
+compressor.release.setValueAtTime(0.25, audioContext.currentTime);
+
+eqBands.high.connect(compressor);
+compressor.connect(audioContext.destination);
+
+// Function to play sound with volume boost
+function playSound(name) {
     if (!sounds[name]) return;
 
     const source = audioContext.createBufferSource();
     source.buffer = sounds[name];
 
     const gainNode = audioContext.createGain();
-    gainNode.gain.value = gainValue; // Increase gain beyond 1 for louder sound
+    const volumeBoost = parseFloat(document.getElementById('volume').value);
+    gainNode.gain.value = volumeBoost; // Boosts volume beyond normal max
 
+    // Connect source -> gain -> EQ -> Compressor -> Output
     source.connect(gainNode);
-    gainNode.connect(audioContext.destination);
+    gainNode.connect(eqBands.low);
 
     source.start();
+}
+
+// Update EQ settings from sliders
+function updateEQ() {
+    eqBands.low.gain.value = document.getElementById('bass').value;
+    eqBands.mid.gain.value = document.getElementById('mid').value;
+    eqBands.high.gain.value = document.getElementById('treble').value;
 }
 
 // Event listeners for buttons
 document.querySelectorAll('.sound-button').forEach(button => {
     button.addEventListener('click', () => {
         const sound = button.getAttribute('data-sound');
-        const gainValue = document.getElementById('volume').value; // Get volume value
-        playSound(sound, gainValue);
+        playSound(sound);
     });
 });
+
+// Listen for EQ slider changes
+document.querySelectorAll('.eq-slider').forEach(slider => {
+    slider.addEventListener('input', updateEQ);
+});
+
