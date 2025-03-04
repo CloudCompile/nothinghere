@@ -2,7 +2,8 @@
 const sounds = {
     sound1: new Audio('sounds/xboxearrape.mp3'),
     sound2: new Audio('sounds/thomasthetrain.mp3'),
-    sound3: new Audio('sounds/gamecube.mp3')
+    sound3: new Audio('sounds/gamecube.mp3'),
+    sound4: new Audio('sounds/iphoneearrape.mp3')
 };
 
 // Add event listeners to buttons
