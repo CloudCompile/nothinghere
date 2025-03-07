@@ -22,6 +22,4 @@ document.querySelectorAll('.sound-button').forEach(button => {
         sounds[sound].play();
     });
 });
-        // Play selected sound
-        sounds[sound].play();
-    });
+
